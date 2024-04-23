@@ -1,0 +1,52 @@
+package ru.kata.spring.boot_security.demo.service;
+
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
+import ru.kata.spring.boot_security.demo.dao.UserDao;
+import ru.kata.spring.boot_security.demo.model.User;
+
+import javax.persistence.EntityManager;
+import java.util.List;
+
+
+@Service("userService")
+public class UserServiceImp implements UserService {
+
+    @Autowired
+    private UserDao userDao;
+
+    @Override
+    public void add(User user) {
+        userDao.add(user);
+    }
+
+    @Override
+    public List<User> listUsers() {
+        return userDao.listUsers();
+    }
+
+    @Override
+    public User showUser(long id) {
+        return userDao.showUser(id);
+    }
+
+    @Override
+    public void update(Long id, User user) {
+        userDao.update(id, user);
+    }
+
+    @Override
+    public void delete(Long id) {
+        userDao.delete(id);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) {
+        return userDao.loadUserByUsername(username);
+    }
+
+
+}
