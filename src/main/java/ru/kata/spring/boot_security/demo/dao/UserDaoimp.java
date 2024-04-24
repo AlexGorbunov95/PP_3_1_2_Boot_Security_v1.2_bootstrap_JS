@@ -32,7 +32,7 @@ public class UserDaoimp implements UserDao {
     @Override
     public void add(User user) {
 
-        user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
+//        user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
 
         //        Set<Role> roles = new HashSet<>();
 //        roles.add(new Role(1L, "ROLE_USER"));

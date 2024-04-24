@@ -3,9 +3,22 @@
 <head>
     <title>Spring Security Example</title>
 </head>
-<body>
-<h1>User, welcome spring boot security page!</h1>
+<h1>Профиль пользователя</h1>
+    <td th:text="${user.getId}">user</td>
+    <td th:text="${user.getName}">user</td>
+    <td th:text="${user.getLastName}">user</td>
+    <td th:text="${user.getAge}">user</td>
+<td>
+    <ul>
+        <li th:each="role : ${user.getRoles()}">
+            <span th:text="${role.getName()}"></span>
+        </li>
+    </ul>
+</td>
+<td>
+    <a th:href="@{/logout}" style="color: blue">EXIT</a>
+</td>
 
-
-</body>
+</div>
+</html>
 </html>

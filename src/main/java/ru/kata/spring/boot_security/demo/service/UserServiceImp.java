@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import ru.kata.spring.boot_security.demo.dao.UserDao;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 
 import javax.persistence.EntityManager;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -20,6 +22,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     public void add(User user) {
+        user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
         userDao.add(user);
     }
 
