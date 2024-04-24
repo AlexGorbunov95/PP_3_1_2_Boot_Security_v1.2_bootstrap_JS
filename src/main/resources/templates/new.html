@@ -29,12 +29,9 @@
 
     <input type="submit" value="SAVE USER"/>
 
-    <div>
-        <label>Роли:</label><br>
-        <input type="checkbox" th:field="*{roles}" value="ROLE_USER"/> Пользователь<br>
-        <input type="checkbox" th:field="*{roles}" value="ROLE_ADMIN"/> Администратор<br>
-        <!-- Добавьте другие роли, если необходимо -->
-    </div>
+    <td>
+        <a th:href="@{/logout}" style="color: blue">LOGOUT USER</a>
+    </td>
 
 </form>
 </body>

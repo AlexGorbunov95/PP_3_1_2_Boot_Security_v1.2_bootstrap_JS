@@ -1,15 +1,12 @@
 package ru.kata.spring.boot_security.demo.service;
 
 
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import ru.kata.spring.boot_security.demo.dao.UserDao;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 
-import javax.persistence.EntityManager;
 import java.util.Collections;
 import java.util.List;
 
@@ -44,11 +41,6 @@ public class UserServiceImp implements UserService {
     @Override
     public void delete(Long id) {
         userDao.delete(id);
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) {
-        return userDao.loadUserByUsername(username);
     }
 
 

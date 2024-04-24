@@ -18,14 +18,9 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userDao.getUserByUsername(username);
         if (user == null) {
-            throw new UsernameNotFoundException("Пользователь с именем: " + username +" не найден.");
+            throw new UsernameNotFoundException("Пользователь с именем: " + username + " не найден.");
         }
-//        return new org.springframework.security.core.userdetails.User(
-//                user.getName(),
-//                user.getPassword(),
-//                user.getRoles()
-//       );
-    return user;
+        return user;
     }
 }
 

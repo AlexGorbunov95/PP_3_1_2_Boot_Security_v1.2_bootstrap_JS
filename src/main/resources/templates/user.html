@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <title>Spring Security Example</title>
 </head>
+
 <h1>Профиль пользователя</h1>
-    <td th:text="${user.getId}">user</td>
-    <td th:text="${user.getName}">user</td>
-    <td th:text="${user.getLastName}">user</td>
-    <td th:text="${user.getAge}">user</td>
+
+<td th:text="${user.getId}">user</td>
+<td th:text="${user.getName}">user</td>
+<td th:text="${user.getLastName}">user</td>
+<td th:text="${user.getAge}">user</td>
 <td>
     <ul>
         <li th:each="role : ${user.getRoles()}">
@@ -15,8 +18,9 @@
         </li>
     </ul>
 </td>
+
 <td>
-    <a th:href="@{/logout}" style="color: blue">EXIT</a>
+    <a th:href="@{/logout}" style="color: blue">LOGOUT USER</a>
 </td>
 
 </div>

@@ -4,28 +4,30 @@ package ru.kata.spring.boot_security.demo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.CustomUserDetailsService;
 import ru.kata.spring.boot_security.demo.service.UserService;
-
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 
 
 @Controller
 @RequestMapping("/")
 public class UserController {
-@Autowired
+    @Autowired
     private CustomUserDetailsService userDetailsService;
 
     @Autowired
     private UserService userService;
+
+    //переопределение на страницу входа
+    @GetMapping(value = "/")
+    public String login() {
+
+        return "redirect:/login";
+    }
+
 
     // Все юзеры
 
