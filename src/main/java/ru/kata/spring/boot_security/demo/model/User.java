@@ -21,7 +21,8 @@ public class User implements UserDetails {
     private String lastName;
     @Column(name = "age")
     private int age;
-
+@Column(name = "e_mail")
+   private String eMail;
     @Size(min = 2, message = "Не меньше 5 знаков")
     private String password;
     @Transient
@@ -32,10 +33,11 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String name, String lastName, int age) {
+    public User(String name, String lastName, int age, String eMail) {
         this.name = name;
         this.lastName = lastName;
         this.age = age;
+        this.eMail = eMail;
     }
 
     public Long getId() {
@@ -47,7 +49,7 @@ public class User implements UserDetails {
     }
 
     public String getName() {
-        return getUsername();
+        return name;
     }
 
     public void setName(String name) {
@@ -68,6 +70,14 @@ public class User implements UserDetails {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public String getEMail(){
+        return getUsername();
+    }
+
+    public void setEMail(String eMail) {
+        this.eMail = eMail;
     }
 
     @Override
@@ -114,7 +124,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return name;
+        return eMail;
     }
 
     @Override

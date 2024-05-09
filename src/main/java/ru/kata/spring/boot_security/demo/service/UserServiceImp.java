@@ -7,7 +7,6 @@ import ru.kata.spring.boot_security.demo.dao.UserDao;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 
-import java.util.Collections;
 import java.util.List;
 
 
@@ -19,7 +18,6 @@ public class UserServiceImp implements UserService {
 
     @Override
     public void add(User user) {
-        user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
         userDao.add(user);
     }
 
@@ -34,13 +32,28 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public void update(Long id, User user) {
-        userDao.update(id, user);
+    public void update(Long id, User user, String roleName) {
+        userDao.update(id, user,roleName);
     }
 
     @Override
     public void delete(Long id) {
         userDao.delete(id);
+    }
+
+    @Override
+    public void updateUser(User user) {
+        userDao.updateUser(user);
+    }
+
+    @Override
+    public List<Role> listRole() {
+        return userDao.listRole();
+    }
+
+    @Override
+    public Role showRole(long id) {
+        return userDao.showRole(id);
     }
 
 

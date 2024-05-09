@@ -4,10 +4,12 @@ package ru.kata.spring.boot_security.demo.dao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -44,12 +46,19 @@ public class UserDaoimp implements UserDao {
 
     @Transactional
     @Override
-    public void update(Long id, User updateUser) {
-        User udateUserId = showUser(id);
-        udateUserId.setName(updateUser.getName());
-        udateUserId.setLastName(updateUser.getLastName());
-        udateUserId.setAge(updateUser.getAge());
-
+    public void update(Long id, User updateUser, String roleName) {
+        User updateUserId = showUser(id);
+        if (roleName.equals("ADMIN")){
+            updateUserId.setRoles(Collections.singleton(new Role(2L ,roleName)));
+        }
+        else {
+            updateUserId.setRoles(Collections.singleton(new Role(1L ,roleName)));
+        }
+        updateUserId.setName(updateUser.getName());
+        updateUserId.setLastName(updateUser.getLastName());
+        updateUserId.setAge(updateUser.getAge());
+        updateUserId.setPassword(updateUser.getPassword());
+        updateUserId.setEMail(updateUser.getEMail());
     }
 
     @Transactional
@@ -58,11 +67,29 @@ public class UserDaoimp implements UserDao {
         entityManager.remove(entityManager.find(User.class, id));
     }
 
-    public User getUserByUsername(String name) {
-        String hql = "FROM User u WHERE u.name = :username";
+    @Override
+    public void updateUser(User user) {
+        entityManager.merge(user);
+    }
+
+    public User getUserByUsername(String eMail) {
+        String hql = "FROM User u WHERE u.eMail = :username";
         Query query = entityManager.createQuery(hql);
-        query.setParameter("username", name);
+        query.setParameter("username", eMail);
         return (User) query.getSingleResult();
     }
 
+    @Transactional
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Role> listRole() {
+        return entityManager.createQuery("SELECT r FROM Role r", Role.class).getResultList();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Role showRole(long id) {
+        return entityManager.find(Role.class, id);
+
+    }
 }
