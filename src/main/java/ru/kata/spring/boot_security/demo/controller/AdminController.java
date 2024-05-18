@@ -9,9 +9,12 @@ import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.CustomUserDetailsService;
+import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
-import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/admin")
@@ -23,7 +26,8 @@ public class AdminController {
 
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private RoleService roleService;
 
     //переопределение на страницу входа
     @GetMapping(value = "/")
@@ -52,34 +56,36 @@ public class AdminController {
         model.addAttribute("userInfo", user);
         model.addAttribute("users", userService.listUsers());
         model.addAttribute("newUser", new User());
+        model.addAttribute("setRoles", roleService.rolesSet());
 
         return "users";
     }
 
     //добавить юзера
     @PostMapping(value = "/create")
-    public String create(@ModelAttribute("newUser") User user, @RequestParam(name = "role", required = true) String roleName) {
-        if (roleName.equals("ADMIN")) {
-            user.setRoles(Collections.singleton(new Role(2L, roleName)));
-        } else {
-            user.setRoles(Collections.singleton(new Role(1L, roleName)));
+    public String create(@ModelAttribute("newUser") User user,
+                         @RequestParam(name = "roles", required = true) List<Long> roleIds) {
+
+        Set<Role> roles = new HashSet<>();
+        for (Long roleId : roleIds) {
+            roles.add(roleService.showRole(roleId));
         }
+        user.setRoles(roles);
         userService.add(user);
         return "redirect:/admin";
     }
 
     //изменить юзера
 
-    @PostMapping("/edit/{id}")
-    public String update(@PathVariable("id") Long id, @ModelAttribute User user, @RequestParam(name = "editrole", required = true) String roleName) {
-
-        userService.update(id, user, roleName);
+    @PutMapping("/edit/{id}")
+    public String update(@PathVariable("id") Long id, @ModelAttribute User user, @RequestParam(name = "roles", required = true) List<Long> roleIds) {
+        userService.update(id, user, roleIds);
         return "redirect:/admin";
     }
 
 
     //удалить юзера
-    @PostMapping(value = "/delete/{id}")
+    @DeleteMapping(value = "/delete/{id}")
     public String delete(@PathVariable("id") Long id) {
         userService.delete(id);
         return "redirect:/admin";

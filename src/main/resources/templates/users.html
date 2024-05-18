@@ -109,7 +109,7 @@
                                     <div class="modal fade" th:id="'editModal' + ${user.id}"
                                          tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
                                          aria-hidden="true">
-                                        <form th:method="POST"
+                                        <form th:method="PUT"
                                               th:action="@{/admin/edit/{id}(id=${user.getId()})}"
                                               th:object="${user}">
                                             <div class="modal-dialog" role="document">
@@ -168,15 +168,18 @@
                                                                            id="formPasswordEdit"
                                                                            placeholder="Password">
                                                                 </div>
-                                                                <div class="input-group mb-3">
-                                                                    <div class="input-group-prepend">
-                                                                        <label for="editrole"></label>
-                                                                        <select class="form-control" id="editrole"
-                                                                                name="editrole">
-                                                                            <option value="USER">USER</option>
-                                                                            <option value="ADMIN">ADMIN</option>
-                                                                        </select>
-                                                                    </div>
+                                                                <div class="form-group">
+                                                                    <label class="d-flex justify-content-center"
+                                                                           for="role" style="font-weight: bold"></label>
+                                                                    <select multiple="multiple" th:name="roles"
+                                                                            class="form-control" id="role"
+                                                                            style="height: 60px; width: 200px;"
+                                                                            required>
+                                                                        <option th:each="role:${setRoles}"
+                                                                                th:value="${role.id}"
+                                                                                th:text="${role.getName()}">
+                                                                        </option>
+                                                                    </select>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -197,7 +200,7 @@
                                     <div class="modal fade" th:id="'deleteModal' + ${user.id}"
                                          tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
                                          aria-hidden="true">
-                                        <form th:method="POST"
+                                        <form th:method="DELETE"
                                               th:action="@{/admin/delete/{id}(id=${user.getId()})}"
                                               th:object="${user}">
                                             <div class="modal-dialog" role="document">
@@ -323,16 +326,17 @@
                                            aria-label="PASSWORD" aria-describedby="basic-addon1">
                                 </div>
                             </div>
-
                             <h5>ROLE <span class="badge badge-secondary"></span></h5>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <label for="role"></label>
-                                    <select class="form-control" id="role" name="role">
-                                        <option value="USER">USER</option>
-                                        <option value="ADMIN">ADMIN</option>
-                                    </select>
-                                </div>
+                            <div class="form-group">
+                                <label class="d-flex justify-content-center" for="roleId"
+                                       style="font-weight: bold"></label>
+                                <select multiple="multiple" th:name="roles" class="form-control" id="roleId"
+                                        style="height: 60px; width: 200px;" required>
+                                    <option th:each="role:${setRoles}"
+                                            th:value="${role.id}"
+                                            th:text="${role.getName()}">
+                                    </option>
+                                </select>
                             </div>
 
 
@@ -342,7 +346,7 @@
                     </div>
                 </div>
             </div>
-            
+
 
             <div class="tab-pane fade" id="user-panel" role="tabpanel" aria-labelledby="user-panel-tab">
                 <h1 class="text-left text-dark">
