@@ -7,9 +7,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Set;
+import java.util.TreeSet;
 
 @Entity
 @Table(name = "users")
@@ -25,7 +26,7 @@ public class User implements UserDetails {
     private int age;
     @Column(name = "e_mail")
     private String eMail;
-    @Size(min = 2, message = "Не меньше 5 знаков")
+    @Column(name = "password")
     private String password;
     @Transient
     private String passwordConfirm;
@@ -36,11 +37,12 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String name, String lastName, int age, String eMail) {
+    public User(String name, String lastName, int age, String eMail, Set<Role> roles) {
         this.name = name;
         this.lastName = lastName;
         this.age = age;
         this.eMail = eMail;
+        this.roles = roles;
     }
 
     public Long getId() {
@@ -149,4 +151,8 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
+
+
 }
