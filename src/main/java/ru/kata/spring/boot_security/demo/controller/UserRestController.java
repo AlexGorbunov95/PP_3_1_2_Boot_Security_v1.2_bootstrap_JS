@@ -1,6 +1,5 @@
 package ru.kata.spring.boot_security.demo.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,9 +15,11 @@ import java.security.Principal;
 @RequestMapping({"/api/user"})
 public class UserRestController {
 
-    @Autowired
-    private CustomUserDetailsService userDetailsService;
+    private final CustomUserDetailsService userDetailsService;
 
+    public UserRestController(CustomUserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     @GetMapping()
     public ResponseEntity<User> showUser(Principal principal) {
@@ -31,7 +32,6 @@ public class UserRestController {
         if (auth != null) {
             SecurityContextHolder.getContext().setAuthentication(null);
         }
-
         return "redirect:/login?logout";
     }
 }

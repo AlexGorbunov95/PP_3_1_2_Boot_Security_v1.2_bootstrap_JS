@@ -12,7 +12,7 @@ public interface UserService {
 
     User showUser(long id);
 
-    void update(Long id, User user, List<Long> roleIds);
+    void editUser(Long id, User user, List<Long> roleIds);
 
     void delete(Long id);
 

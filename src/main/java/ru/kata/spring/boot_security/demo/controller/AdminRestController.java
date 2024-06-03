@@ -70,13 +70,11 @@ public class AdminRestController {
         return ResponseEntity.ok(userByName);
     }
 
-
     @PutMapping("/update")
     public ResponseEntity<?> updateUser(@RequestBody User user) {
         userService.updateUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<User> removeUser(@PathVariable("id") Long id) {

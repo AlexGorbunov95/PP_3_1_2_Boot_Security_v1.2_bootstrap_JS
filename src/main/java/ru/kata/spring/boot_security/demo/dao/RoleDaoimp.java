@@ -12,9 +12,9 @@ import java.util.Set;
 
 @Repository
 public class RoleDaoimp implements RoleDao {
+
     @PersistenceContext
     private EntityManager entityManager;
-
 
     @Override
     public List<Role> getAllRoles() {
@@ -29,14 +29,12 @@ public class RoleDaoimp implements RoleDao {
     @Override
     public Role showRole(long id) {
         return entityManager.find(Role.class, id);
-
     }
 
     @Override
     public void addRole(Role role) {
         entityManager.persist(role);
     }
-
 
     @Override
     public Role showRoleName(String roleName) {

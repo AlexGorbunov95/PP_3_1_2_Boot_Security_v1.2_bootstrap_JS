@@ -11,26 +11,24 @@ import java.util.Set;
 
 @Service
 public class RoleServiceimp implements RoleService {
+
     final RoleDao roleDao;
 
     public RoleServiceimp(RoleDao roleDao) {
         this.roleDao = roleDao;
     }
 
-@Transactional
+
     @Override
     public List<Role> getAllRoles() {
         return roleDao.getAllRoles();
     }
 
-
-    @Transactional
     @Override
     public Set<Role> rolesSet() {
         return roleDao.rolesSet();
     }
 
-    @Transactional(readOnly = true)
     @Override
     public Role showRole(long id) {
         return roleDao.showRole(id);
@@ -42,11 +40,8 @@ public class RoleServiceimp implements RoleService {
         roleDao.addRole(role);
     }
 
-    @Transactional
     @Override
     public Role showRoleName(String roleName) {
         return roleDao.showRoleName(roleName);
     }
-
-
 }

@@ -1,7 +1,6 @@
 package ru.kata.spring.boot_security.demo.dao;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
@@ -18,19 +17,19 @@ import java.util.Set;
 @Repository
 public class UserDaoimp implements UserDao {
 
-
-
     @PersistenceContext
     private EntityManager entityManager;
 
-@Autowired
-private RoleService roleService;
+    private final RoleService roleService;
+
+    public UserDaoimp(RoleService roleService) {
+        this.roleService = roleService;
+    }
 
     @Override
     public void add(User user) {
         entityManager.persist(user);
     }
-
 
     @Override
     @SuppressWarnings("unchecked")
@@ -38,16 +37,14 @@ private RoleService roleService;
         return entityManager.createQuery("SELECT u FROM User u", User.class).getResultList();
     }
 
-
     @Override
     public User showUser(long id) {
         return entityManager.find(User.class, id);
 
     }
 
-
     @Override
-    public void update(Long id, User updateUser, List<Long> roleIds) {
+    public void editUser(Long id, User updateUser, List<Long> roleIds) {
         User updateUserId = showUser(id);
         Set<Role> roles = new HashSet<>();
         for (Long roleId : roleIds) {
@@ -60,7 +57,6 @@ private RoleService roleService;
         updateUserId.setPassword(updateUser.getPassword());
         updateUserId.setEMail(updateUser.getEMail());
     }
-
 
     @Override
     public void delete(Long id) {
@@ -78,5 +74,4 @@ private RoleService roleService;
         query.setParameter("username", eMail);
         return (User) query.getSingleResult();
     }
-
 }
